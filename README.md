@@ -6,7 +6,7 @@
 - CSS6
 
 ## 📄 화면 설명
-일반적인 홈페이지 배치로 구성하여 화면 꾸며보았습니다.
+일반적인 홈페이지 배치로 구성하여 화면 꾸미기
 - 크게 header / navigator / content / footer 영역으로 4등분
   - header : 로고 / 검색바 배치
   - navigator : 가로 메뉴바
