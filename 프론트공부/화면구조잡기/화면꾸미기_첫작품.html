@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화면통합</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+    <style>
+        div, form {
+            box-sizing: border-box;
+            /* border: 1px solid red; */
+        }
+
+
+        .wrap {
+            width: 1000px;
+            height: 800px;
+            margin: auto;
+        }
+
+        .wrap>div { width: 100%; }
+        
+        #header { height: 20%; }
+        #navigator { height: 5%; }
+        #empty { height: 1%;}
+        #content { height: 54%; }
+        #footer { height: 20%; }
+
+        #header>div, #content>div {
+            height: 100%;
+            float: left;
+        }
+
+        #header_1 { width: 30%; }
+        #header_2 { width: 55%;}
+        #header_3 { width: 15%; }
+
+        #content_1 { width: 15%; }
+        #content_1_img_1 {width: 40%;}
+        #content_1_img_2 {width: 40%;}
+        #content_2 { width: 60%; }
+        #content_3 { width: 25%; }
+
+        /* footer 관련 스타일 ----- */
+        #footer>div { width: 100%; }
+        #footer_1 { height: 20%; }
+        #footer_2 { height: 80%; }
+
+        #footer_1 {
+            border: 3px solid red;
+            border-left: none;
+            border-right: none;
+        }
+
+        #footer_1>a:hover {
+            font-size: 15px;
+        }
+
+        #footer_2>p {
+            /* border: 1px solid blue; */
+            width: 100%;
+            margin: 0px;
+            /* 
+                p 요소는 기본적으로 기본 스타일로
+                위 아래에 margin 이 들어감!!
+            */
+            box-sizing: border-box;
+            font-size: 12px;
+            font-family: 나눔고딕;
+        }
+
+        #p1 { 
+            height: 70%; 
+            padding: 5px 15px;
+        }
+        #p2 { 
+            height: 30%; 
+            text-align: center;
+        }
+        
+        #footer_1>a {
+            text-decoration: none;
+            color: black;
+            font-weight: 600;
+            margin: 15px;
+            vertical-align: middle;
+            /* 
+                수직 구조에서 가운데로 오게끔 해주는 속성 
+            */
+        }
+
+        /* content_1 관련 스타일 */
+        
+        #content_1>div {
+            box-sizing: border-box;
+            width: 130px;
+            height: 200px;
+            margin: auto;
+        }
+
+        #c-img1{
+            box-sizing: border-box;
+        }
+
+        /* header_3 관련 스타일 */
+        #shin_action {
+            width: 80%;
+            padding: 10px;
+            
+        }
+
+        /* content_2 관련 스타일 */
+        #shin_video {
+            width: 100%;
+            margin: auto;
+        }
+
+        /* content_3 관련 스타일 ----- */
+        #login_form {
+            width: 100%;
+            height: 30%;
+        }
+
+        #login_form>* { width: 100%; }
+        #login_form_input { height: 80%; }
+        #login_form_etc { 
+            height: 20%; 
+            text-align: center;
+            /*  
+                안쪽 a 태그들에 대해서 가운데정렬을 하고 싶다면
+                그들의 부모요소에 가운데정렬 스타일을 줘야 함!!
+            */
+        } 
+
+        #login_form_etc>a {
+            text-decoration: none;
+            color: black;
+            /* border: 1px solid green; */
+            margin: 10px;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        #login_form_input>* {
+            height: 100%;
+            float: left;
+        }
+
+        #login_input_id_pwd { width: 65%; }
+        #login_input_btn { width: 35%; }
+
+        #login_input_id_pwd>input {
+            width: 100%;
+            height: 50%;
+            box-sizing: border-box;
+        }
+
+        #login_input_btn>input[type="submit"] {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(241, 49, 49);
+            border: none;
+            color: white;
+            /* background-image: url('../resources/image/shin_logo.png');
+            background-size: cover; */
+        }
+
+        #login {
+            border-color: rgb(231, 142, 142);
+        }
+
+        #pwd {
+            border-color: rgb(231, 142, 142);
+        }
+
+        #login_form_etc>a {
+            font-size: x-small;
+            font-family: 나눔고딕;
+        }
+        
+        #content_3 {position: relative;}
+
+        #shin3 {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            width: 80%;
+        }
+
+        /* header_2 관련 스타일 ----- */
+        #search_shin {
+            width: 10%;
+            position: absolute;
+            right: 40px;
+            top: 2px;
+        }
+
+        #header_2 { position: relative; } 
+        /* 검책창 가운데정렬 1단계 : 부모요소에 기준점 잡기 */
+
+        #search_form {
+            width: 80%;
+            height: 20%;
+            margin: auto; /* 검색창 가운데정렬 2_1단계 : 수평기준으로 좌우 맞춰줌 */
+            position: absolute; /* 검색창 가운데정렬 2_2단계 : 절대위치로 움직이겠다고 선언 */
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px; /* 검색창 가운데정렬 3단계 : 상하좌우로 0px 로 잡아당기기 */
+        }
+
+        #search_form>div {
+            height: 100%;
+            float: left;
+        }
+
+        #search_text{ width: 80%; }
+        #search_btn{ width: 20%; } 
+
+        #search_form input {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        #search_button {
+            border-color: rgb(216, 110, 110);
+            border-radius: 10px;
+            font-family: 나눔고딕;
+            background-image: url('../resources/image/search.png');
+            background-size: 30%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        #search_bar {
+            border-color: rgb(216, 110, 110);
+            border-radius: 10px;
+            font-family: 나눔고딕;
+        }
+
+        /* navigator 영역 관련 스타일 -----*/
+    
+        #navi {
+            background-color: red;
+            /* border: 1px solid blue; */
+            margin: 0px;
+            padding: 0px;
+            /*
+                ul 요소도 기본적으로 위, 아래에 margin 이 존재
+                또한 기본적으로 왼쪽에 padding 도 존재  
+                (일부러 둘 다 0px 로 셋팅해둠)
+            */
+            list-style-type: none; /* 불릿기호 없애기 */
+            height: 100%;
+        }
+
+        #navi>li {
+            /* border: 1px solid green; */
+            float: left;
+            width: 15%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #navi a {
+            /* border: 1px solid orange; */
+            font-family: 나눔고딕;
+            text-decoration: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 900;
+            width: 100%;
+            height: 100%;
+            display: block;
+            background-color: red;
+            /*  
+                a 태그는 인라인 요소이기 때문에
+                기본적으로 width 와 height 속성이 적용되지 않음!!
+                > display : block; 으로 블럭요소화 해주면 됨
+            */
+            /* vertical-align: middle; */
+            line-height: 35px;
+            /*  
+                vertical-align 은 오직 "인라인요소" 에만 적용 가능함
+                a 요소를 display : block; 으로 "블럭요소" 로 바꿨기 때문에
+                적용 불가능!!
+                > 블럭요소에서 수직으로 가운데 배치 가능한 스타일을 부여
+                (line-height 속성
+                보통은 해당 블럭요소의 세로길이만큼 주면
+                알아서 가운데로 옴)
+            */
+
+            transform: scale(1);
+            /*  
+                서브메뉴 연결 끊어짐 이슈 해결방법
+                1배 확대하겠다 라는 함수
+                (충분히 연결 끊어졌던게 붙어짐!!)
+            */
+
+        }
+
+        #navi a:hover {
+            color: white;
+            text-decoration: underline;
+            text-shadow: 2px 2px 2px lightgrey;
+            font-size: 15px;
+        }
+
+        #navi>li>ul {
+            list-style-type: none;
+            padding: 0px;
+            /*
+                서브메뉴는 평소에는 안 보여지다가 (숨겨주는 효과)
+                해당 메인메뉴에 마우스가 올라가는 순간 펼쳐지는 효과를 줘야함
+            */
+            display: none;
+            /* 평소에는 안 보여지다가 마우스가 올라가는 순간 펼쳐지는 효과 부여 1단계 */
+        }
+
+        #navi>li>a:hover+ul {
+            display: block;
+            /* 평소에는 안 보여지다가 마우스가 올라가는 순간 펼쳐지는 효과 부여 2단계 */
+        }
+        /*
+            위의 스타일은
+            메인메뉴에만 마우스가 올라갈 때 유지됨
+            > 서브메뉴에도 마우스가 올라갈 때 유지가 되게끔 해줘야 함  
+        */
+
+        #navi>li>ul:hover {
+            display: block;
+             /* 평소에는 안 보여지다가 마우스가 올라가는 순간 펼쳐지는 효과 부여 3단계 */
+        }
+
+        /*  
+            * navigator 부분 코드 통합 시 이슈 발생
+            > 메인메뉴를 나타내는 a 태그와 서브메뉴를 나타내는 ul 태그의
+              연결이 미세하게 끊겨있기 때문!!
+
+            * 해결방법
+            > 메인메뉴를 나타내는 a 태그에 transform 속성 추가
+              (애니메이션 효과를 줄 수 있는 속성)
+        */
+
+        /* header_1 관련 스타일 */
+        
+        #header_1 { position: relative;}
+
+        #logo {
+            box-sizing: border-box;
+            width: 100%; 
+            margin: auto;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <div class="wrap">
+
+        <div id="header">
+            <div id="header_1">
+                <!-- 
+                    이 자리에 하이퍼링크 포함 이미지 로고 찍기 
+                    현재 내가 작업중인 폴더 위치 : 2_css-workspace/화면구조잡기 폴더
+                    로고 이미지의 폴더 위치 : 2_css-workspace/resources/image 폴더
+
+                    > 현재 내가 있는 폴더 위치를 한 겹  빠져나오기 : ../
+                    > 이미지 경로 : src"../resources/image/~~~.jpg"
+                -->
+                <a href="https://tooniverse.cjenm.com/ko/shinchan2023/">
+                    <img src="../resources/image/12.webp" id="logo">
+                </a>
+
+            </div>
+            <div id="header_2">
+                <img src="../resources/image/2.webp" id="search_shin">
+                <form id="search_form" action="search.do" method="get">
+                    <div id="search_text">
+                        <input type="search" name="keyword" placeholder="검색어를 입력하세요" id="search_bar">
+                    </div>
+                    <div id="search_btn">
+                        <input type="submit" value="" id="search_button">
+                    </div>
+                </form>
+            </div>
+            <div id="header_3">
+                <img src="../resources/image/shin_action.png" id="shin_action">
+            </div>
+        </div>
+
+        <div id="navigator"> <!-- 보통 메뉴바를 navigator 라 부름 -->
+            <ul id="navi">
+                <li><a href="">짱구 소개</a></li>
+                <li><a href="">작가 소개</a></li>
+                <li>
+                    <a href="">등장인물</a>
+                    <ul>
+                        <li><a href="">짱구</a></li>
+                        <li><a href="">봉미선</a></li>
+                        <li><a href="">신형만</a></li>
+                        <li><a href="">짱아</a></li>
+                        <li><a href="">흰둥이</a></li>
+                        <li><a href="">철수</a></li>
+                        <li><a href="">맹구</a></li>
+                        <li><a href="">훈이</a></li>
+                        <li><a href="">유리</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="">TV</a>
+                    <ul>
+                        <li><a href="">1기</a></li>
+                        <li><a href="">2기</a></li>
+                        <li><a href="">3기</a></li>
+                        <li><a href="">4기</a></li>
+                        <li><a href="">5기</a></li>
+                        <li><a href="">6기</a></li>
+                        <li><a href="">7기</a></li>
+                        <li><a href="">8기</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="">극장판</a>
+                    <ul>
+                        <li><a href="">액션가면</a></li>
+                        <li><a href="">어른제국</a></li>
+                        <li><a href="">불고기로드</a></li>
+                        <li><a href="">로봇아빠</a></li>
+                    </ul>
+                </li>
+                
+            </ul>
+        </div> 
+
+        <div id="empty"></div>
+
+        <div id="content">
+            <div id="content_1">
+                <div id="content_1_img_1">
+                    <img id="c_img1" src="../resources/image/shin_adult.avif" width="130px"> <br>
+                </div>
+                <div id="content_1_img_2">
+                    <img id="c_img2" width="130px" src="../resources/image/shin_2.jpg">
+                </div>
+
+            </div>
+            <div id="content_2">
+                <iframe id="shin_video" width="560" height="315" src="https://www.youtube.com/embed/JGyv-k0YGG8?si=ZAsDAWxeLaZ4juv4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+
+                </iframe>
+
+            </iframe></div>
+
+            <div id="content_3">
+                <!-- 1. 전체내용을 감싸는 div -->
+                <div id="login_form">
+                    <!-- 2_1. 입력을 받는 input 요소들이 위치할 form 영역 -->
+                    <form id="login_form_input" action="login.me" method="post">
+                        <!-- 3_1. 왼쪽 : 아이디와 비밀번호를 입력받은 text 영역 -->
+                        <div id="login_input_id_pwd">
+                            <input type="text" name="userId" placeholder="아이디 입력" required id="login"> <br>
+                            <input type="password" name="userPwd" placeholder="비밀번호 입력" required id="pwd"> <br>
+                        </div>
+                        <!-- 3_2. 오른쪽 : 로그인버튼이 위치할 button 영역 -->
+                        <div id="login_input_btn">
+                            <input type="submit" value="로그인">
+                        </div>
+                        <br><br>
+        
+                    </form>
+                    <!-- 2_2. 회원가입, ID/PWD 찾기 페이지 요청 a 태그들이 위치할 div 영역 -->
+                    <div id="login_form_etc">
+                        <a href="">회원가입</a> |
+                        <a href="">ID 찾기</a> |
+                        <a href="">비밀번호 찾기</a>
+                    </div>
+
+                    <img src="../resources/image/shin3.png" id="shin3">
+                </div>
+
+        
+            </div>
+        </div>
+
+        <div id="footer">
+            <div id="footer_1">
+                <a href="">극장판</a> |
+                <a href="">TV</a> |
+                <a href="">유튜브</a> |
+                <a href="">비디오</a>
+            </div>
+            <div id="footer_2">
+                <p id="p1">
+                    짱구는 못말려는 1990년 8월에 나온 우스이 요시토의 연재 만화 크레용 신짱을 원작으로 한 애니메이션이다. <br>
+                    대한민국과 일본, 중국, 대만, 인도를 비롯한 아시아 지역과 스페인을 비롯한 유럽, 그리고 미국까지 전세계 40여개국에 수출, 방영되었으며 <br>
+                    연재 만화 1억 4800만부 이상의 작품 판매고를 올리며 한국, 일본, 대만, 스페인 등 4개국에서 많은 사랑을 받아온 전설적인 만화 • 애니메이션이다.
+
+                </p>
+                <p id="p2">
+                    Copyright © 1992~ Shinchan Animation Institute All Right Reserved
+                </p> <!-- p 도 블럭요소라 영역 나누기 가능 -->
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
