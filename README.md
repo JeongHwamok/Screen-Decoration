@@ -12,3 +12,5 @@
   - navigator : 가로 메뉴바
   - content : content / 로그인
   - footer : 홈페이지 정보나 copylight 정보
+
+![image](https://github.com/user-attachments/assets/40865a84-050b-4dcf-8e07-b70fdca91a6a)
